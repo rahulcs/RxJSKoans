@@ -21,5 +21,5 @@ test('the main event', function () {
 
   e.emit('change', '!');
 
-  equal(__, received.join(''));
+  equal('RxJS', received.join(''));
 });

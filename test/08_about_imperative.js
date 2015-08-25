@@ -16,7 +16,7 @@ test('can make a decision with an if with no else', function () {
     })
     .subscribe(results.push.bind(results));
 
-  equal(__, results.join(''));
+  equal('246810', results.join(''));
 });
 
 test('can make a decision with an if with an else', function () {
@@ -31,7 +31,7 @@ test('can make a decision with an if with an else', function () {
     })
     .subscribe(results.push.bind(results));
 
-  equal(__, results.join(''));
+  equal('23445678', results.join(''));
 });
 
 test('we can make test cases', function () {
@@ -44,7 +44,7 @@ test('we can make test cases', function () {
     'wes': Observable.just(4)
   };
 
-  Observable.just(__)
+  Observable.just('wes')
     .flatMap(function (x) {
       return Observable.case(
         function () { return x; },
@@ -71,7 +71,7 @@ test('we can also have a default case', function () {
       return Observable.case(
         function () { return x; },
         cases,
-        Observable.just(__)
+        Observable.just(5)
       );
     })
     .subscribe(function (x) { result = x; });
@@ -86,7 +86,7 @@ test('while does something until proven false', function () {
   var source = Rx.Observable
     .while(
       function () { return ++i < 3 },
-      Rx.Observable.just(__)
+      Rx.Observable.just(42)
     )
     .subscribe(result.push.bind(result));
 

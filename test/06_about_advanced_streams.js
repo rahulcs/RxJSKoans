@@ -11,7 +11,7 @@ test('merging', function () {
   var you = Observable.of(1,2,3);
   var me = Observable.of('A','B','C');
   you.merge(me).subscribe(easy.push.bind(easy));
-  equal(easy.join(' '), __);
+  equal(easy.join(' '), '1 A 2 B 3 C');
 });
 
 test('merging events', function () {
@@ -32,13 +32,13 @@ test('merging events', function () {
   s1.onNext('perfect.');
 
   equal('I am nobody. Nobody is perfect.', both.join(' '));
-  equal(__, first.join(' '));
+  equal('I am perfect.', first.join(' '));
 });
 
 test('splitting up', function () {
   var oddsAndEvens = [];
   var numbers = Observable.range(1, 9);
-  var split = numbers.groupBy(function (n) { return n % __; });
+  var split = numbers.groupBy(function (n) { return n % 2; });
   split.subscribe(function (group) {
     group.subscribe(function (n) {
       oddsAndEvens[group.key] || (oddsAndEvens[group.key] = '');
@@ -56,7 +56,7 @@ test('need to subscribe immediately when splitting', function () {
   var split = numbers.groupBy(function (n) { return n % 2; });
 
   split.subscribe(function (g) {
-    g.average().__(function (a) { averages[g.key] = a; });
+    g.average().subscribe(function (a) { averages[g.key] = a; });
   });
 
   equal(22, averages[0]);
@@ -85,5 +85,5 @@ test('multiple subscriptions', function () {
   numbers.onCompleted();
 
   equal(15, sum);
-  equal(__, average);
+  equal(2, average);
 });
